@@ -37,7 +37,8 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
-    'convargo': 0
+    'convargo': 0,
+    'treasury':0
   }
 }, {
   'id': '65203b0a-a864-4dea-81e2-e389515752a8',
@@ -51,7 +52,8 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
-    'convargo': 0
+    'convargo': 0,
+    'treasury':0
   }
 }, {
   'id': '94dab739-bd93-44c0-9be1-52dd07baa9f6',
@@ -65,7 +67,8 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
-    'convargo': 0
+    'convargo': 0,
+    'treasury':0
   }
 }];
 
@@ -202,9 +205,20 @@ function calculatePriceVol(){
     console.log(deliveries[i].price);
   }
 }
+
+function calculateCommission(){
+  var n = Object.keys(deliveries).length;
+  for(var i=0;i<n;i++){
+    deliveries[i].commission.insurance = (0.5*0.3*deliveries[i].price);
+    var m = deliveries[i].distance%500;
+    deliveries[i].commission.treasury = m;
+    deliveries[i].commission.convargo = 0.3*deliveries[i].price-deliveries-m-deliveries[i].commission.insurance;
+  }
+}
 console.log("Manasa");
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
 calculatePrice();
 calculatePriceVol();
+
