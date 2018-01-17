@@ -158,9 +158,53 @@ function calculatePrice(){
     console.log(deliveries[i].price);
   }
 }
-
+function calculatePriceVol(){
+  var n = Object.keys(deliveries).length;
+  var m = Object.keys(truckers).length;
+  var x = 0;
+  var priceVol = 0;
+  for (var i=0;i<n;i++){
+    for (var j=0;j<m;j++){
+      if (deliveries[i].truckerId == truckers[j].id){
+        x = j;
+        break;
+      }
+    }
+    //offers: base price + 0.9 * op + 0.7* op+ 0.5* op
+    //price 1: base price
+    if ((deliveries[i].volume-5) < 0){
+        priceVol = deliveries[i].volume*truckers[j].pricePerVolume;
+    }
+    else{
+      //price 1: base price
+      priceVol = 5*truckers[j].pricePerVolume;
+      if ((deliveries[i].volume-10) < 0){
+        //price 2: 0.9
+         priceVol += (deliveries[i].volume-5)*(0.9*truckers[j].pricePerVolume);
+      }
+      else{
+        priceVol += 5*(0.9*truckers[j].pricePerVolume);
+        if ((deliveries[i].volume-25) < 0){
+          //price 3: 0.7
+            priceVol += (deliveries[i].volume-10)*(0.7*truckers[j].pricePerVolume);
+        }
+        else{
+          priceVol += 15*(0.7*truckers[j].pricePerVolume);
+          if ((deliveries[i].volume-15) > 0){
+          //price 3: 0.7
+            priceVol += (deliveries[i].volume-25)*(0.5*truckers[j].pricePerVolume);
+        }
+        }
+      }
+    }
+    deliveries[i].price = (deliveries[i].distance*truckers[x].pricePerKm)+priceVol
+    console.log(deliveries[i].id);
+    console.log(deliveries[i].price);
+  }
+}
 console.log("Manasa");
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
 calculatePrice();
+calculatePriceVol();
