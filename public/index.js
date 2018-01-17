@@ -19,6 +19,7 @@ var truckers = [{
   'pricePerVolume': 10
 }];
 
+
 //list of current shippings
 //useful for ALL exercises
 //The `price` is updated from exercice 1
@@ -141,6 +142,25 @@ const actors = [{
   }]
 }];
 
+function calculatePrice(){
+  var n = Object.keys(deliveries).length;
+  var m = Object.keys(truckers).length;
+  var x = 0;
+  for (var i=0;i<n;i++){
+    for (var j=0;j<m;j++){
+      if (deliveries[i].truckerId == truckers[j].id){
+        x = j;
+        break;
+      }
+    }
+    deliveries[i].price = (deliveries[i].distance*truckers[x].pricePerKm)+(deliveries[i].volume*truckers[j].pricePerVolume);
+    console.log(deliveries[i].id);
+    console.log(deliveries[i].price);
+  }
+}
+
+console.log("Manasa");
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
+calculatePrice();
